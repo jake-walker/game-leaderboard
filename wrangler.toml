@@ -1,0 +1,8 @@
+name = "game-leaderboard"
+type = "webpack"
+webpack_config = "webpack.config.js"
+
+account_id = "23eb612e59ddb6c776533d8cb10de788"
+workers_dev = true
+route = ""
+zone_id = ""
