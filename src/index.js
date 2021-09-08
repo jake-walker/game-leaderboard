@@ -23,7 +23,7 @@ async function handleRequest(request) {
     }
 
     const reqData = await request.json();
-    const resData = await graphql(schema, '{ hello }', root, {}, reqData.variables);
+    const resData = await graphql(schema, reqData.query, root, {}, reqData.variables, reqData.operationName);
 
     return new Response(JSON.stringify(resData), {
         headers: { "content-type": "text/json" }
