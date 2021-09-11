@@ -1,4 +1,5 @@
 const { customAlphabet } = require('nanoid');
+
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 6);
 
 async function set(type, obj) {
@@ -32,7 +33,7 @@ async function getAttribute(type, id, attribute) {
 async function incrementAttribute(type, id, attribute) {
   const key = `${type}:${id}:${attribute}`;
   let value = JSON.parse(await LEADERBOARD.get(key));
-  value++;
+  value += 1;
   await LEADERBOARD.put(key, JSON.stringify(value));
 }
 
@@ -47,7 +48,7 @@ async function findOne(type, id) {
   const list = await LEADERBOARD.list({ prefix: `${type}:${id}:` });
   let output = null;
   for (const { name } of list.keys) {
-    const key = name.split(":")[2];
+    const key = name.split(':')[2];
     const value = JSON.parse(await LEADERBOARD.get(name));
     if (output === null) output = { id };
     output[key] = value;
@@ -56,11 +57,11 @@ async function findOne(type, id) {
 }
 
 async function findAll(type) {
-  const list = await LEADERBOARD.list({ prefix: `${type}:`});
+  const list = await LEADERBOARD.list({ prefix: `${type}:` });
   const output = {};
   for (const { name } of list.keys) {
-    const id = name.split(":")[1];
-    const key = name.split(":")[2];
+    const id = name.split(':')[1];
+    const key = name.split(':')[2];
     const value = JSON.parse(await LEADERBOARD.get(name));
     if (!(id in output)) {
       output[id] = {};
@@ -69,7 +70,7 @@ async function findAll(type) {
   }
   return Object.entries(output).map(([key, value]) => ({
     id: key,
-    ...value
+    ...value,
   }));
 }
 
@@ -81,5 +82,5 @@ module.exports = {
   findOne,
   findAll,
   remove,
-  getAttribute
-}
+  getAttribute,
+};
