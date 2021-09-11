@@ -23,6 +23,12 @@ async function pushAttribute(type, id, attribute, value) {
   await LEADERBOARD.put(key, JSON.stringify(list));
 }
 
+async function getAttribute(type, id, attribute) {
+  console.log(`Getting ${attribute} for ${type} ${id}`);
+  const key = `${type}:${id}:${attribute}`;
+  return JSON.parse(await LEADERBOARD.get(key));
+}
+
 async function incrementAttribute(type, id, attribute) {
   const key = `${type}:${id}:${attribute}`;
   let value = JSON.parse(await LEADERBOARD.get(key));
@@ -74,5 +80,6 @@ module.exports = {
   incrementAttribute,
   findOne,
   findAll,
-  remove
+  remove,
+  getAttribute
 }
