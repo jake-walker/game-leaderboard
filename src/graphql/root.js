@@ -1,5 +1,6 @@
 const {
   GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLList,
+  GraphQLError,
 } = require('graphql');
 const { GraphQLPlayerType } = require('./player');
 const { GraphQLGameType } = require('./game');
@@ -44,8 +45,12 @@ module.exports = {
             name: { type: new GraphQLNonNull(GraphQLString) },
           },
           resolve: async (_, { name }) => {
+            if (name.trim() === '') {
+              throw new GraphQLError('Name is required');
+            }
+
             const player = {
-              name,
+              name: name.trim(),
               gameIds: [],
               wins: 0,
               losses: 0,
@@ -64,11 +69,21 @@ module.exports = {
             location: { type: GraphQLString },
           },
           resolve: async (_, { winner, loser, location }) => {
+            let loc = location;
+
+            if (!((await kv.exists('player', winner)) && (await kv.exists('player', loser)))) {
+              throw new GraphQLError('Winner or loser does not exist');
+            }
+
+            if (!loc || loc.trim() === '') {
+              loc = null;
+            }
+
             const game = {
               date: new Date(),
               winnerId: winner,
               loserId: loser,
-              location: location || null,
+              location: loc,
             };
             const id = await kv.set('game', game);
             game.id = id;

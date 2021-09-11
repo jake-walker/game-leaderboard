@@ -22,7 +22,7 @@ To deploy the Pages site, run the following
 
 ## Todo
 
-- [ ] Validation of user input
+- [x] Validation of user input
 - [ ] Add unit tests?
 - [ ] Write Pages site
 - [ ] IP address filtering (list of CIDRs?)
