@@ -6,3 +6,7 @@ account_id = "23eb612e59ddb6c776533d8cb10de788"
 workers_dev = true
 route = ""
 zone_id = ""
+
+kv_namespaces = [
+  { binding = "LEADERBOARD", id = "473996db64e8475bab8029f4801ea13d", preview_id = "473996db64e8475bab8029f4801ea13d" }
+]
