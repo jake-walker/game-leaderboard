@@ -1,7 +1,7 @@
 const {
   GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLInt,
 } = require('graphql');
-const kv = require('../kv');
+const { basicResolver } = require('./kv_resolver');
 
 module.exports = {
   GraphQLPlayerType: new GraphQLObjectType({
@@ -12,38 +12,23 @@ module.exports = {
       },
       name: {
         type: new GraphQLNonNull(GraphQLString),
-        resolve: async (obj) => {
-          if ('name' in obj) return obj.name;
-          return kv.getAttribute('player', obj.id, 'name');
-        },
+        resolve: basicResolver('player', 'name'),
       },
       gameIds: {
         type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))),
-        resolve: async (obj) => {
-          if ('gameIds' in obj) return obj.gameIds;
-          return kv.getAttribute('player', obj.id, 'gameIds');
-        },
+        resolve: basicResolver('player', 'gameIds'),
       },
       wins: {
         type: new GraphQLNonNull(GraphQLInt),
-        resolve: async (obj) => {
-          if ('wins' in obj) return obj.wins;
-          return kv.getAttribute('player', obj.id, 'wins');
-        },
+        resolve: basicResolver('player', 'wins'),
       },
       losses: {
         type: new GraphQLNonNull(GraphQLInt),
-        resolve: async (obj) => {
-          if ('losses' in obj) return obj.losses;
-          return kv.getAttribute('player', obj.id, 'losses');
-        },
+        resolve: basicResolver('player', 'losses'),
       },
       rank: {
         type: new GraphQLNonNull(GraphQLInt),
-        resolve: async (obj) => {
-          if ('rank' in obj) return obj.rank;
-          return kv.getAttribute('player', obj.id, 'rank');
-        },
+        resolve: basicResolver('player', 'rank'),
       },
     },
   }),

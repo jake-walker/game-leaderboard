@@ -4,6 +4,7 @@ const {
 const { GraphQLPlayerType } = require('./player');
 const { GraphQLGameType } = require('./game');
 const kv = require('../kv');
+const { rootResolver } = require('./kv_resolver');
 
 module.exports = {
   schema: new GraphQLSchema({
@@ -15,18 +16,14 @@ module.exports = {
           args: {
             id: { type: new GraphQLNonNull(GraphQLString) },
           },
-          resolve: (_, { id }) => ({
-            id,
-          }),
+          resolve: rootResolver('player'),
         },
         game: {
           type: GraphQLGameType,
           args: {
             id: { type: new GraphQLNonNull(GraphQLString) },
           },
-          resolve: (_, { id }) => ({
-            id,
-          }),
+          resolve: rootResolver('game'),
         },
         allPlayer: {
           type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLPlayerType))),

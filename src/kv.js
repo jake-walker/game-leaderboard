@@ -13,6 +13,11 @@ async function set(type, obj) {
   return id;
 }
 
+async function exists(type, id) {
+  const result = await LEADERBOARD.list({ prefix: `${type}:${id}:`, limit: 1 });
+  return result.keys.length > 0;
+}
+
 async function setAttribute(type, id, attribute, value) {
   await LEADERBOARD.put(`${type}:${id}:${attribute}`, JSON.stringify(value));
 }
@@ -87,4 +92,5 @@ module.exports = {
   findAll,
   remove,
   getAttribute,
+  exists,
 };

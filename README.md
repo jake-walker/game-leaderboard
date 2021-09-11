@@ -1,15 +1,29 @@
-# 👷 `worker-template` Hello World
+# Game Leaderboard
 
-A template for kick starting a Cloudflare worker project.
+A simple web app for recording office pool, table tennis, football table or other games.
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
+This project utilises [Cloudflare Workers](https://workers.cloudflare.com/), [Cloudflare Workers KV](https://developers.cloudflare.com/workers/runtime-apis/kv) and [Cloudflare Pages](https://pages.cloudflare.com/) to create a lightning fast, serverless leaderboard which can be run for free (depending on the size of your office).
 
-#### Wrangler
+At the heart of the project, the Worker function parses API requests and reads and writes data to Workers KV. Pages stores and serves the user interface for interacting with the Worker function.
 
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+## Deployment
 
+To deploy the Worker function, run the following
+
+```bash
+wrangler publish
 ```
-wrangler generate projectname https://github.com/cloudflare/worker-template
+
+To deploy the Pages site, run the following
+
+```bash
+# coming soon!
 ```
 
-Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
+## Todo
+
+- [ ] Validation of user input
+- [ ] Add unit tests?
+- [ ] Write Pages site
+- [ ] IP address filtering (list of CIDRs?)
+- [ ] Basic password authentication
