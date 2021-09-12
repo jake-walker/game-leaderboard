@@ -24,6 +24,6 @@ To deploy the Pages site, run the following
 
 - [x] Validation of user input
 - [ ] Add unit tests?
-- [ ] Write Pages site
+- [x] Write Pages site
 - [x] IP address filtering (list of CIDRs?)
 - [ ] Basic password authentication

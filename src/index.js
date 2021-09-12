@@ -1,13 +1,14 @@
 const { graphql } = require('graphql');
-const ipRangeCheck = require('ip-range-check');
 const config = require('./config');
 const { schema } = require('./graphql/root');
+const ipCheck = require('./security/ip-check');
+const keyCheck = require('./security/key');
 
 const headers = {
   'Content-Type': 'text/json',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': `Content-Type, ${config.presharedAuthHeaderKey}`,
 };
 
 async function handleRequest(request) {
@@ -21,12 +22,12 @@ async function handleRequest(request) {
     });
   }
 
-  if (!ipRangeCheck(request.headers.get('CF-Connecting-IP'), config.allowedIps)) {
+  if (!(ipCheck(request) && keyCheck(request))) {
     return new Response(JSON.stringify({
-      error: 'Not authorized',
+      error: 'You may need to add a key to your request or access from a different location.',
     }), {
       headers,
-      status: 401,
+      status: 403,
     });
   }
 
