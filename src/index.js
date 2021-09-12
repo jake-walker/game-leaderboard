@@ -1,4 +1,6 @@
 const { graphql } = require('graphql');
+const ipRangeCheck = require('ip-range-check');
+const config = require('./config');
 const { schema } = require('./graphql/root');
 
 const headers = {
@@ -16,6 +18,15 @@ async function handleRequest(request) {
         Allow: 'OPTIONS, POST',
       },
       status: 204,
+    });
+  }
+
+  if (!ipRangeCheck(request.headers.get('CF-Connecting-IP'), config.allowedIps)) {
+    return new Response(JSON.stringify({
+      error: 'Not authorized',
+    }), {
+      headers,
+      status: 401,
     });
   }
 
