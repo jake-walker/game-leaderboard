@@ -11,6 +11,7 @@ At the heart of the project, the Worker function parses API requests and reads a
 To deploy the Worker function, run the following
 
 ```bash
+cd worker
 wrangler publish
 ```
 
@@ -19,11 +20,3 @@ To deploy the Pages site, run the following
 ```bash
 # coming soon!
 ```
-
-## Todo
-
-- [x] Validation of user input
-- [ ] Add unit tests?
-- [x] Write Pages site
-- [x] IP address filtering (list of CIDRs?)
-- [ ] Basic password authentication
