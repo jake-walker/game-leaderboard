@@ -4,7 +4,7 @@ module.exports = {
   GraphQLDateType: new GraphQLScalarType({
     name: 'Date',
     serialize(value) {
-      return value.getTime();
+      return (new Date(value)).getTime();
     },
     parseValue(value) {
       return new Date(value);
