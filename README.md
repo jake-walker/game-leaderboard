@@ -12,6 +12,12 @@ A live demonstration of the project is available at <https://game-leaderboard.pa
 
 The Worker is available at <https://game-leaderboard.jakew.workers.dev> if you fancy playing with that.
 
+## Screenshots
+
+![Leaderboard page](./images/leaderboard.png)
+
+![Game listing page](./images/games.png)
+
 ## Development and Deployment
 
 For instructions on developing or deploying the project, look at the [Worker readme](./worker/README.md) and [client readme](./client/README.md) for details on setting up each.
