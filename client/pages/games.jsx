@@ -8,8 +8,12 @@ const GamesQuery = gql`
     allGame {
       id
       date
-      winnerId
-      loserId
+      winner {
+        name
+      }
+      loser {
+        name
+      }
       location
     }
   }
@@ -41,8 +45,8 @@ export default function Games() {
             games.map((game) => (
               <tr key={game.id}>
                 <td>{(new Date(game.date)).toLocaleString()}</td>
-                <td>{game.winnerId}</td>
-                <td>{game.loserId}</td>
+                <td>{game.winner.name}</td>
+                <td>{game.loser.name}</td>
                 <td>{game.location}</td>
               </tr>
             ))

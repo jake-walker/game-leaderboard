@@ -1,6 +1,7 @@
 const { GraphQLObjectType, GraphQLNonNull, GraphQLString } = require('graphql');
 const { GraphQLDateType } = require('./date');
-const { basicResolver } = require('./kv_resolver');
+const { basicResolver, nestedResolver } = require('./kv_resolver');
+const { GraphQLPlayerType } = require('./player');
 
 module.exports = {
   GraphQLGameType: new GraphQLObjectType({
@@ -13,13 +14,13 @@ module.exports = {
         type: new GraphQLNonNull(GraphQLDateType),
         resolve: basicResolver('game', 'date'),
       },
-      winnerId: {
-        type: new GraphQLNonNull(GraphQLString),
-        resolve: basicResolver('game', 'winnerId'),
+      winner: {
+        type: new GraphQLNonNull(GraphQLPlayerType),
+        resolve: nestedResolver('game', 'winnerId'),
       },
-      loserId: {
-        type: new GraphQLNonNull(GraphQLString),
-        resolve: basicResolver('game', 'loserId'),
+      loser: {
+        type: new GraphQLNonNull(GraphQLPlayerType),
+        resolve: nestedResolver('game', 'loserId'),
       },
       location: {
         type: GraphQLString,

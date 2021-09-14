@@ -21,4 +21,14 @@ module.exports = {
       };
     };
   },
+
+  nestedResolver(parentType, parentAttribute) {
+    return async ({ id }) => {
+      const childId = await kv.getAttribute(parentType, id, parentAttribute);
+
+      return {
+        id: childId,
+      };
+    };
+  },
 };

@@ -1,5 +1,5 @@
 const {
-  GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLInt,
+  GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLInt,
 } = require('graphql');
 const { basicResolver } = require('./kv_resolver');
 
@@ -13,10 +13,6 @@ module.exports = {
       name: {
         type: new GraphQLNonNull(GraphQLString),
         resolve: basicResolver('player', 'name'),
-      },
-      gameIds: {
-        type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))),
-        resolve: basicResolver('player', 'gameIds'),
       },
       wins: {
         type: new GraphQLNonNull(GraphQLInt),
