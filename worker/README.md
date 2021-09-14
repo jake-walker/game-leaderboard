@@ -23,6 +23,18 @@ wrangler kv:namespace create "LEADERBOARD"
 wrangler dev
 ```
 
+## Environment Variables
+
+These environment variables can be set to change functionality:
+
+> Enabling the preshared auth header will cause the included web client to stop working (as the header won't be set)
+
+- `LB_ALLOWED_IPS_ENABLED` - Whether IP checking is enabled (`yes` to enable)
+- `LB_ALLOWED_IPS` - Set to an IP address with an optional CIDR to prevent connections outside that IP
+- `LB_PRESHARED_AUTH_HEADER_ENABLED` - Whether a 'password' required for requests (`yes` to enable)
+- `LB_PRESHARED_AUTH_HEADER_KEY` - The header name to use for auth header
+- `LB_PRESHARED_AUTH_HEADER_VALUE` - The required content for the auth header
+
 ## Deploying on Cloudflare
 
 To deploy, simply run `wrangler publish` and the Worker will be deployed on your account's worker.dev domain.

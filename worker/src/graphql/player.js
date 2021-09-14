@@ -3,6 +3,7 @@ const {
 } = require('graphql');
 const { basicResolver } = require('./kv_resolver');
 
+// This is a custom GraphQL type for players
 module.exports = {
   GraphQLPlayerType: new GraphQLObjectType({
     name: 'Player',

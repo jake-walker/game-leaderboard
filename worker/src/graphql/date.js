@@ -1,5 +1,6 @@
 const { GraphQLScalarType, Kind } = require('graphql');
 
+// This is a custom date type, as GraphQL does not have a date type built in.
 module.exports = {
   GraphQLDateType: new GraphQLScalarType({
     name: 'Date',

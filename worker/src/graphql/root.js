@@ -95,12 +95,15 @@ module.exports = {
             const id = await kv.set('game', game);
             game.id = id;
 
+            // Add the game ID to both players
             await kv.pushAttribute('player', winner, 'gameIds', id);
             await kv.pushAttribute('player', loser, 'gameIds', id);
 
+            // Increment win/loss counters on both players
             await kv.incrementAttribute('player', winner, 'wins');
             await kv.incrementAttribute('player', loser, 'losses');
 
+            // Calculate the player's new ranks
             const oldWinnerRank = await kv.getAttribute('player', winner, 'rank');
             const oldLoserRank = await kv.getAttribute('player', loser, 'rank');
             const newWinnerRank = elo.updateRating(

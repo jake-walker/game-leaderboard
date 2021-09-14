@@ -3,6 +3,7 @@ const { GraphQLDateType } = require('./date');
 const { basicResolver, nestedResolver } = require('./kv_resolver');
 const { GraphQLPlayerType } = require('./player');
 
+// This is a custom GraphQL type for games
 module.exports = {
   GraphQLGameType: new GraphQLObjectType({
     name: 'Game',

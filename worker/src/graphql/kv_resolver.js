@@ -22,6 +22,7 @@ module.exports = {
     };
   },
 
+  // The nested resolver fetches a child item ID from the database and passes it to a child type
   nestedResolver(parentType, parentAttribute) {
     return async ({ id }) => {
       const childId = await kv.getAttribute(parentType, id, parentAttribute);

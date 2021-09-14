@@ -2,7 +2,18 @@ const { customAlphabet } = require('nanoid');
 
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 6);
 
+// To get a relational database type feel, IDs are structured so that they can be searched easily.
+// They are in the format TYPE:IDENTIFIER:ATTRIBUTE.
+// You can get a list by using the prefix of a key, so you can list TYPE: to get all the items of a
+// specific type or TYPE:IDENTIFIER: to get all the attributes for a specific item.
+// e.g. an pet {"id": 123, "type": "dog", "name": "coco", "age": "3"} would be stored as
+//    pet:123:type = dog
+//    pet:123:name = coco
+//    pet:123:age  = 3
+
 async function set(type, obj) {
+  // Generate an ID if there isn't one
+  // This allows an entire object to be updated
   const id = obj.id || nanoid();
 
   await Promise.all(Object.entries(obj).map(async ([key, value]) => {
