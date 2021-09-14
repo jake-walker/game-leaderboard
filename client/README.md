@@ -2,7 +2,7 @@
 
 - **Build Settings**
   - Build Command: `yarn run build-static`
-  - Build Output Directory: `client/out`
+  - Build Output Directory: `out`
 - **Root Directory**
   - Path: `client`
 - **Environment Variables**

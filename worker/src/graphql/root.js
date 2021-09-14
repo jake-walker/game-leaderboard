@@ -2,10 +2,13 @@ const {
   GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLList,
   GraphQLError,
 } = require('graphql');
+const EloRank = require('elo-rank');
 const { GraphQLPlayerType } = require('./player');
 const { GraphQLGameType } = require('./game');
 const kv = require('../kv');
 const { rootResolver } = require('./kv_resolver');
+
+const elo = new EloRank();
 
 module.exports = {
   schema: new GraphQLSchema({
@@ -71,6 +74,10 @@ module.exports = {
           resolve: async (_, { winner, loser, location }) => {
             let loc = location;
 
+            if (winner === loser) {
+              throw new GraphQLError('Winner and loser can\'t be the same');
+            }
+
             if (!((await kv.exists('player', winner)) && (await kv.exists('player', loser)))) {
               throw new GraphQLError('Winner or loser does not exist');
             }
@@ -87,6 +94,24 @@ module.exports = {
             };
             const id = await kv.set('game', game);
             game.id = id;
+
+            await kv.pushAttribute('player', winner, 'gameIds', id);
+            await kv.pushAttribute('player', loser, 'gameIds', id);
+
+            await kv.incrementAttribute('player', winner, 'wins');
+            await kv.incrementAttribute('player', loser, 'losses');
+
+            const oldWinnerRank = await kv.getAttribute('player', winner, 'rank');
+            const oldLoserRank = await kv.getAttribute('player', loser, 'rank');
+            const newWinnerRank = elo.updateRating(
+              elo.getExpected(oldWinnerRank, oldLoserRank), 1, oldWinnerRank,
+            );
+            const newLoserRank = elo.updateRating(
+              elo.getExpected(oldLoserRank, oldWinnerRank), 0, oldLoserRank,
+            );
+            await kv.setAttribute('player', winner, 'rank', newWinnerRank);
+            await kv.setAttribute('player', loser, 'rank', newLoserRank);
+
             return game;
           },
         },
