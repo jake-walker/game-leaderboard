@@ -21,7 +21,9 @@ const GameMutation = gql`
   }
 `;
 
-function PlayerSelect({ players, controlId, controlName, value, handler }) {
+function PlayerSelect({
+  players, controlId, controlName, value, handler,
+}) {
   return (
     <Form.Group className="mb-3" controlId={controlId}>
       <Form.Label>{controlName}</Form.Label>
@@ -35,7 +37,7 @@ function PlayerSelect({ players, controlId, controlName, value, handler }) {
 
 export default function AddGame() {
   const { loading, error: playersError, data: playersData } = useQuery(PlayersQuery);
-  const [addGame, { loading: adding, error: gameError, data: gameData }] = useMutation(GameMutation);
+  const [addGame, { loading: adding, error: gameError, data }] = useMutation(GameMutation);
 
   const [inputField, setInputField] = React.useState({
     winner: '',
@@ -68,7 +70,7 @@ export default function AddGame() {
     content = <p>Loading...</p>;
   } else if (adding) {
     content = <p>Adding game...</p>;
-  } else if (gameData) {
+  } else if (data) {
     content = (
       <>
         <p>Great! The game is now recorded.</p>
@@ -78,7 +80,9 @@ export default function AddGame() {
       </>
     );
   } else {
-    const players = [...playersData.allPlayer].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    const players = [...playersData.allPlayer].sort(
+      (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+    );
 
     content = (
       <Form onSubmit={submitHandler}>

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/index.css';
 
 const client = new ApolloClient({
-  uri: 'https://game-leaderboard.jakew.workers.dev/',
+  uri: process.env.NEXT_PUBLIC_API_ENDPOINT,
   cache: new InMemoryCache(),
 });
 
