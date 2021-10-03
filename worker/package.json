@@ -8,11 +8,13 @@
     "lint": "eslint .",
     "dev": "miniflare --debug --watch",
     "build": "wrangler build",
-    "publish": "wrangler publish"
+    "publish": "wrangler publish",
+    "test": "yarn run build && ava --verbose test/*.spec.js"
   },
   "author": "Jake Walker <hi@jakew.me>",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^3.15.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
