@@ -5,14 +5,18 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev": "miniflare --debug --watch",
+    "build": "wrangler build",
+    "publish": "wrangler publish"
   },
   "author": "Jake Walker <hi@jakew.me>",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "miniflare": "^1.4.1"
   },
   "dependencies": {
     "elo-rank": "^1.0.4",
